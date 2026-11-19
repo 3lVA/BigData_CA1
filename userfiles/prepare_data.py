@@ -1,5 +1,6 @@
 import csv
 import json
+import re
 from pathlib import Path
 
 # Resolve paths from this script so preparation works from any working directory.
@@ -119,9 +120,174 @@ def prepare_bus_stops():
     )
 
 
+def prepare_bus_od():
+    source_path = RAW / "origin_destination_bus_202609.csv"
+    output_path = CANONICAL / "bus_od.csv"
+    temporary_path = CANONICAL / "bus_od.csv.tmp"
+    quarantine_path = QUARANTINE / "bus_od_quarantine.csv"
+
+    source_columns = [
+        "YEAR_MONTH",
+        "DAY_TYPE",
+        "TIME_PER_HOUR",
+        "PT_TYPE",
+        "ORIGIN_PT_CODE",
+        "DESTINATION_PT_CODE",
+        "TOTAL_TRIPS",
+    ]
+
+    # Use the prepared metadata to identify unmatched stop IDs.
+    # Unmatched historic stops remain in the OD analysis.
+    with (CANONICAL / "bus_stops.csv").open(
+        newline="", encoding="utf-8"
+    ) as source:
+        known_stops = {
+            row["bus_stop_id"]
+            for row in csv.DictReader(source)
+        }
+
+    # Remember each full OD key and its trip count to distinguish
+    # repeated records from conflicting values for the same key.
+    seen = {}
+    total = 0
+    excluded = 0
+    duplicates = 0
+    unmatched_rows = 0
+    months = set()
+
+    # Publish the canonical file only after preparation succeeds,
+    # keeping a failed run from publishing a partial final file.
+    with source_path.open(newline="", encoding="utf-8-sig") as source, \
+         temporary_path.open("w", newline="", encoding="utf-8") as output, \
+         quarantine_path.open("w", newline="", encoding="utf-8") as rejected:
+
+        reader = csv.DictReader(source)
+        writer = csv.writer(output)
+        quarantine_writer = csv.writer(rejected)
+
+        if not set(source_columns).issubset(reader.fieldnames or []):
+            raise ValueError("The bus OD CSV has unexpected headers.")
+
+        # Use the canonical column names and order from Appendix A.
+        writer.writerow([
+            "year_month",
+            "day_type",
+            "hour",
+            "origin_stop_id",
+            "destination_stop_id",
+            "total_trips",
+        ])
+        quarantine_writer.writerow(["reason", "raw_record"])
+
+        for row in reader:
+            total += 1
+            reason = ""
+
+            # Reject surplus or missing fields before extracting values.
+            if None in row or any(
+                row.get(column) is None for column in source_columns
+            ):
+                excluded += 1
+                quarantine_writer.writerow([
+                    "wrong_column_count",
+                    json.dumps(row),
+                ])
+                continue
+
+            month, day_type, hour_text, transport, origin, destination, trips_text = [
+                row[column].strip()
+                for column in source_columns
+            ]
+
+            # Preserve stop IDs as strings, including leading zeroes.
+            # Validate source fields before accepting their passenger counts.
+            if transport != "BUS":
+                reason = "non_bus_record"
+            elif not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", month):
+                reason = "invalid_month"
+            elif day_type not in {"WEEKDAY", "WEEKENDS/HOLIDAY"}:
+                reason = "invalid_day_type"
+            elif not origin or not destination:
+                reason = "missing_stop_id"
+            else:
+                try:
+                    hour = int(hour_text)
+                    trips = int(trips_text)
+                except ValueError:
+                    reason = "invalid_integer"
+                else:
+                    if not 0 <= hour <= 23:
+                        reason = "invalid_hour"
+                    elif trips < 0:
+                        reason = "negative_trip_count"
+
+            # Retain rejected source records with a reason for the audit trail.
+            if reason:
+                excluded += 1
+                quarantine_writer.writerow([
+                    reason,
+                    json.dumps(row),
+                ])
+                continue
+
+            # Different hours are distinct source aggregates.
+            # M1 will combine their passenger totals after preparation.
+            key = (month, day_type, hour, origin, destination)
+
+            if key in seen:
+                if trips != seen[key]:
+                    # Record the conflict and stop for investigation instead
+                    # of selecting an arbitrary passenger count.
+                    quarantine_writer.writerow([
+                        "conflicting_od_key",
+                        json.dumps(row),
+                    ])
+                    raise ValueError(
+                        f"Conflicting trip counts for {key}: "
+                        f"{seen[key]} and {trips}"
+                    )
+
+                # Keep one copy of an agreed record and log the extra copy.
+                excluded += 1
+                duplicates += 1
+                quarantine_writer.writerow([
+                    "exact_duplicate",
+                    json.dumps(row),
+                ])
+                continue
+
+            seen[key] = trips
+            months.add(month)
+
+            # A valid OD record remains accepted when metadata is missing.
+            # Count unmatched rows so this limitation can be disclosed.
+            if origin not in known_stops or destination not in known_stops:
+                unmatched_rows += 1
+
+            writer.writerow([
+                month,
+                day_type,
+                hour,
+                origin,
+                destination,
+                trips,
+            ])
+
+    temporary_path.replace(output_path)
+
+    print(
+        f"Bus OD: input={total}, accepted={len(seen)}, "
+        f"excluded={excluded}, duplicates={duplicates}, "
+        f"unmatched_stop_rows={unmatched_rows}"
+    )
+    print(f"Bus OD months: {', '.join(sorted(months))}")
+
+
 # Run preparation when this script is executed directly. Create output folders
 # if needed so the same command can be used on a fresh project copy.
 if __name__ == "__main__":
     CANONICAL.mkdir(exist_ok=True)
     QUARANTINE.mkdir(exist_ok=True)
+    # Prepare metadata first because OD preparation uses its stop IDs.
     prepare_bus_stops()
+    prepare_bus_od()
