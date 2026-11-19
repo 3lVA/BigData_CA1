@@ -1,0 +1,6 @@
+["daily", "S06", "2026-09-22"]	{"station_id": "S06", "date": "2026-09-22", "total_observed_rainfall_mm": "47.4", "valid_observations": 259, "expected_observations": 288, "coverage_percent": 89.93, "status": "partial"}
+["partial", "S06", "2026-09-22"]	{"station_id": "S06", "date": "2026-09-22", "total_observed_rainfall_mm": "47.4", "valid_observations": 259, "expected_observations": 288, "coverage_percent": 89.93, "status": "partial"}
+["daily", "S306", "2026-09-22"]	{"station_id": "S306", "date": "2026-09-22", "total_observed_rainfall_mm": "130.6", "valid_observations": 288, "expected_observations": 288, "coverage_percent": 100.0, "status": "eligible"}
+["daily", "S904", "2026-09-22"]	{"station_id": "S904", "date": "2026-09-22", "total_observed_rainfall_mm": "123.2", "valid_observations": 260, "expected_observations": 288, "coverage_percent": 90.28, "status": "eligible"}
+["top10", 1]	{"station_id": "S306", "date": "2026-09-22", "total_observed_rainfall_mm": "130.6", "valid_observations": 288, "expected_observations": 288, "coverage_percent": 100.0, "status": "eligible", "rank": 1}
+["top10", 2]	{"station_id": "S904", "date": "2026-09-22", "total_observed_rainfall_mm": "123.2", "valid_observations": 260, "expected_observations": 288, "coverage_percent": 90.28, "status": "eligible", "rank": 2}
