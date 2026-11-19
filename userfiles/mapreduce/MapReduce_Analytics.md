@@ -327,16 +327,88 @@ excluded because it has only two rainfall days in the sample. The one-station
 sample does not exercise the mixed-station 50% boundary. Its rainfall slots are
 all above the eligibility minimum, so it does not exercise the 259/260 boundary.
 
-### Validation and Execution Status
+### Validation and Execution
 The script's calculation functions were checked against independent rational-number
 calculations on the selected records. Additional function-level checks exercised
 the 259/260 coverage boundary, exactly 50% wet stations and missing weather.
-The inline mrjob run and full YARN execution are pending; their saved outputs,
-logs and application IDs must be checked before claiming successful execution.
+
+The inline sample run completed all three stages. Its output matched the expected
+A10 means and signed difference. The counters reported three dates per weather
+group and one carpark below the minimum supporting-day requirement (A11).
+
+The full Hadoop run completed all three YARN applications successfully:
+
+| Stage | Application ID | Final status |
+|---|---|---|
+| Daily rainfall and parking aggregation | application_1795002805512_0007 | SUCCEEDED |
+| Weather classification and date join | application_1795002805512_0008 | SUCCEEDED |
+| Carpark comparisons and ranking | application_1795002805512_0009 | SUCCEEDED |
+
+Sample creation:
+
+```sh
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py --create-sample
+```
+
+Inline validation (Windows Command Prompt):
+
+```cmd
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r inline mapreduce/m4_sample_rainfall.csv mapreduce/m4_sample_carpark.csv > evidence\m4-sample-output.txt 2> evidence\m4-sample-log.txt
+```
+
+Full YARN execution (Windows Command Prompt):
+
+```cmd
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r hadoop hdfs:///sg_mobility/canonical/rainfall.csv hdfs:///sg_mobility/canonical/carpark.csv > evidence\m4-output.txt 2> evidence\m4-yarn-log.txt
+```
+
+Independent reference calculations using exact rational arithmetic for canonical
+parking observations and the checked M2 station-day rainfall summaries matched
+all qualifying carpark IDs, supporting counts, six-decimal means and differences.
+The top-ten order also matched when ranked by unrounded absolute differences.
+Signed zero in the saved decimal output is numerically equivalent to zero.
+
+The [sample output](../../evidence/m4-sample-output.txt),
+[sample log](../../evidence/m4-sample-log.txt),
+[full results](../../evidence/m4-output.txt),
+[YARN execution log](../../evidence/m4-yarn-log.txt) and
+[application screenshot](../../evidence/m4--yarn-applications.png)
+are saved under evidence/.
 
 ### Findings
-Pending the full YARN execution. Sample values are validation expectations,
-not findings from the full dataset.
+September contained nine widespread-rainfall dates, twelve dates with no recorded
+rainfall among eligible stations, and nine intermediate dates excluded from this
+comparison. There were 1,996 qualifying carparks; another four carparks represented
+on the retained weather dates failed the minimum of three days per group.
+The first-stage counters also reported 23 ineligible observed station-days.
+
+EPL had the largest absolute difference. Its mean observed daily occupancy was
+59.19% on widespread-rainfall days and 89.48% on no-recorded-rainfall days, a signed
+difference of -30.29 percentage points. The comparison used nine and twelve days,
+with 214 and 289 valid parking observations respectively.
+
+U24 and T3 showed differences in the opposite direction: their mean occupancy
+was higher on widespread-rainfall days by 29.52 and 26.02 percentage points.
+Both increases and decreases therefore appear among the largest differences;
+these results do not establish a uniform weather effect across carparks.
+
+| Rank | Carpark | Widespread-rainfall mean occupancy | No-recorded-rainfall mean occupancy | Difference (percentage points) | Supporting days (rain / no rain) |
+|---|---|---:|---:|---:|---:|
+| 1 | EPL | 59.19% | 89.48% | -30.29 | 9 / 12 |
+| 2 | U24 | 61.89% | 32.37% | 29.52 | 9 / 12 |
+| 3 | T3 | 51.03% | 25.00% | 26.02 | 9 / 12 |
+| 4 | C17 | 39.81% | 15.08% | 24.73 | 9 / 12 |
+| 5 | CK66 | 15.28% | 39.84% | -24.55 | 9 / 12 |
+| 6 | L8 | 75.19% | 50.84% | 24.34 | 9 / 12 |
+| 7 | SB46 | 44.04% | 20.25% | 23.79 | 9 / 12 |
+| 8 | T1 | 43.84% | 21.53% | 22.30 | 9 / 12 |
+| 9 | HG53 | 52.22% | 74.35% | -22.13 | 7 / 11 |
+| 10 | U5 | 46.59% | 25.06% | 21.53 | 9 / 12 |
+
+Operators could prioritise these carparks for further review of day-of-week
+patterns, local conditions and sampling coverage. For example, HG53 has fewer
+supporting observations and dates than most of the other top-ten carparks.
+The ranking identifies exploratory associations, not causal effects of rainfall.
 
 ### Data Limitations
 Weather groups describe the proportion of eligible reporting stations, not the
