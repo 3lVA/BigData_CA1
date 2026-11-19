@@ -1,8 +1,10 @@
 .env
 .env *
+userfiles/canonical_data/
+userfiles/quarantine_data/
 CA1_Datasets/
 userfiles/ca1-data/
 namenode_data/
 datanode*_data/
 __pycache__/
-*_SelfReflection.docx
+*.docx
