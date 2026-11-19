@@ -1,0 +1,45 @@
+Connecting to namenode via http://namenode:9870/fsck?ugi=root&files=1&blocks=1&locations=1&path=%2Fsg_mobility%2Fraw%2Fbus_stops.csv
+FSCK started by root (auth:SIMPLE) from /172.22.0.2 for path /sg_mobility/raw/bus_stops.csv at Thu Nov 19 04:45:12 GMT 2026
+
+/sg_mobility/raw/bus_stops.csv 357464 bytes, replicated: replication=2, 1 block(s):  Under replicated BP-2088541905-127.0.0.1-1795002543518:blk_1073741825_1001. Target Replicas is 2 but found 1 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+0. BP-2088541905-127.0.0.1-1795002543518:blk_1073741825_1001 len=357464 Live_repl=1  [DatanodeInfoWithStorage[172.22.0.6:9866,DS-196b79f9-5cbd-4132-9a46-a85955dc82a4,DISK]]
+
+
+Status: HEALTHY
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			0
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	357464 B
+ Total files:	1
+ Total blocks (validated):	1 (avg. block size 357464 B)
+ Minimally replicated blocks:	1 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	1 (100.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	1.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		1 (50.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Thu Nov 19 04:45:12 GMT 2026 in 3 milliseconds
+
+
+The filesystem under path '/sg_mobility/raw/bus_stops.csv' is HEALTHY
