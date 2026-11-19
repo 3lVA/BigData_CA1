@@ -1,0 +1,9 @@
+Found 4 items
+-rw-r--r--   2 root supergroup  222002663 2026-11-19 15:27 /sg_mobility/canonical/bus_od.csv
+-rw-r--r--   2 root supergroup     357462 2026-11-19 15:27 /sg_mobility/canonical/bus_stops.csv
+-rw-r--r--   2 root supergroup   27213145 2026-11-19 17:34 /sg_mobility/canonical/rainfall.csv
+-rw-r--r--   2 root supergroup       3700 2026-11-19 17:34 /sg_mobility/canonical/weather_stations.csv
+Found 3 items
+-rw-r--r--   2 root supergroup         19 2026-11-19 15:28 /sg_mobility/quarantine/bus_od_quarantine.csv
+-rw-r--r--   2 root supergroup         19 2026-11-19 15:28 /sg_mobility/quarantine/bus_stops_quarantine.csv
+-rw-r--r--   2 root supergroup         19 2026-11-19 17:34 /sg_mobility/quarantine/rainfall_quarantine.csv
