@@ -1,0 +1,20 @@
+No configs found; falling back on auto-configuration
+No configs specified for inline runner
+Creating temp directory /tmp/m4_rainfall_parking.root.20261119.222442.137253
+Running step 1 of 3...
+Running step 2 of 3...
+
+Counters: 2
+	M4 weather dates
+		no_recorded_rainfall=3
+		widespread_rainfall=3
+
+Running step 3 of 3...
+
+Counters: 1
+	M4 checks
+		Carparks below minimum days=1
+
+job output is in /tmp/m4_rainfall_parking.root.20261119.222442.137253/output
+Streaming final output from /tmp/m4_rainfall_parking.root.20261119.222442.137253/output...
+Removing temp directory /tmp/m4_rainfall_parking.root.20261119.222442.137253...

@@ -233,3 +233,193 @@ September 2026 and remain assigned to their actual source dates.
 
 The downloaded data lacks retrieval timestamps, so retrieved_at is blank.
 Occupancy snapshots do not measure vehicle arrivals, turnover or parking duration.
+
+
+## M4 Parking Occupancy and Regional Rainfall Context
+
+### Self-Generated Question
+Which carparks show the largest differences in mean observed daily occupancy
+between widespread-rainfall days and days with no recorded rainfall among
+eligible stations during September 2026?
+
+### Business Justification
+Parking operators can use this analysis to identify carparks whose observed
+occupancy differs between regional weather conditions and prioritise locations
+for further operational review. The analysis compares mean daily occupancy
+within each carpark, reporting supporting day and observation counts. It provides
+exploratory evidence for reviewing wet-weather parking guidance and capacity
+management. Regional rainfall does not establish rainfall at individual carparks,
+and differences may also reflect weekday patterns, events and uneven sampling.
+
+### Method and Analysis Rules
+Both inputs are frozen, validated and deduplicated canonical CSVs. No additional
+location data or spatial assignments are used. This is a date-based contextual
+comparison, not a carpark-to-weather-station spatial join.
+
+| Rule | Definition |
+|---|---|
+| Period | Source observations dated September 2026 in Asia/Singapore |
+| Eligible station-day | At least 260 of 288 unique five-minute rainfall slots |
+| Daily weather measure | Stations with rainfall above zero divided by eligible stations; rainfall depths are not summed across stations |
+| Widespread rainfall | At least 50% of eligible stations recorded rainfall above zero |
+| No recorded rainfall | No eligible station recorded rainfall above zero |
+| Excluded dates | Intermediate proportions, or no eligible rainfall stations |
+| Parking input | Valid unique observations of lot type C, using each observation's own capacity |
+| Daily occupancy | Mean observation occupancy for each carpark and source date |
+| Weather-group mean | Mean of contributing daily occupancy means; each day has equal weight |
+| Minimum support | At least three contributing carpark-days in each weather group |
+| Signed difference | (Widespread-rainfall mean minus no-recorded-rainfall mean) multiplied by 100, in percentage points |
+| Ranking | Top ten by absolute unrounded difference descending, then carpark ID ascending |
+
+The 50% weather threshold and three-day minimum are declared analysis choices.
+The minimum is a support filter, not a statistical significance test. The output
+contains a comparison record for every qualifying carpark and a separate top-ten
+ranking. Negative differences mean lower observed occupancy on widespread-rainfall
+days; positive differences mean higher observed occupancy on those days.
+
+### MapReduce Logic Diagram
+
+```mermaid
+flowchart TD
+    A["Canonical rainfall.csv"] --> C["Stage 1 mapper: filter September source dates; tag rainfall and parking records"]
+    B["Canonical carpark.csv: lot type C"] --> C
+    C --> D["Optional combiner: aggregate sums and counts locally"]
+    D --> E["Shuffle by data type, date and station or carpark ID"]
+    E --> F["Stage 1 reducer: eligible station-day rain indicators and carpark-day mean occupancy"]
+    F --> G["Stage 2 shuffle: group summaries by date"]
+    G --> H["Stage 2 reducer: calculate eligible-station rain proportion; classify weather; join parking on the same date"]
+    H --> I["Exclude intermediate weather dates and dates without eligible stations"]
+    H --> J["Stage 3 shuffle: bring retained compact daily summaries to a common key"]
+    J --> K["Stage 3 reducer: compare daily means within each carpark; require three days per group"]
+    K --> L["Output all qualifying comparisons and top ten absolute differences"]
+```
+
+Stage 3 accumulates per-carpark sums, day counts and observation counts rather
+than storing raw observations. This uses one final reducer for global ranking
+and is intended for the supplied classroom dataset scale.
+
+### Sample Design and Expected Results
+The sample-creation command selects actual canonical records from 3, 4, 5, 21,
+22 and 27 September 2026. It creates only two input CSVs:
+
+- m4_sample_rainfall.csv: 1,727 S306 observations across those six dates.
+- m4_sample_carpark.csv: 262 lot-type-C observations for A10 and A11.
+
+A11's 27 September observations are deliberately omitted from the sample to test
+the three-day minimum. The full canonical inputs are unchanged. In this controlled
+one-station sample, three dates have recorded rainfall and three have none. These
+sample classifications do not represent the full network's weather categories.
+
+Independent calculations from the selected records give:
+
+| Sample result for A10 | Expected value |
+|---|---:|
+| Widespread-rainfall days | 3 |
+| No-recorded-rainfall days | 3 |
+| Parking observations in each group | 72 |
+| Widespread-rainfall mean occupancy ratio | 0.481554 |
+| No-recorded-rainfall mean occupancy ratio | 0.544271 |
+| Signed difference, percentage points | -6.271701 |
+| Absolute difference, percentage points | 6.271701 |
+
+A10 should be the only qualifying comparison and rank first. A11 should be
+excluded because it has only two rainfall days in the sample. The one-station
+sample does not exercise the mixed-station 50% boundary. Its rainfall slots are
+all above the eligibility minimum, so it does not exercise the 259/260 boundary.
+
+### Validation and Execution
+The script's calculation functions were checked against independent rational-number
+calculations on the selected records. Additional function-level checks exercised
+the 259/260 coverage boundary, exactly 50% wet stations and missing weather.
+
+The inline sample run completed all three stages. Its output matched the expected
+A10 means and signed difference. The counters reported three dates per weather
+group and one carpark below the minimum supporting-day requirement (A11).
+
+The full Hadoop run completed all three YARN applications successfully:
+
+| Stage | Application ID | Final status |
+|---|---|---|
+| Daily rainfall and parking aggregation | application_1795002805512_0007 | SUCCEEDED |
+| Weather classification and date join | application_1795002805512_0008 | SUCCEEDED |
+| Carpark comparisons and ranking | application_1795002805512_0009 | SUCCEEDED |
+
+Sample creation:
+
+```sh
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py --create-sample
+```
+
+Inline validation (Windows Command Prompt):
+
+```cmd
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r inline mapreduce/m4_sample_rainfall.csv mapreduce/m4_sample_carpark.csv > evidence\m4-sample-output.txt 2> evidence\m4-sample-log.txt
+```
+
+Full YARN execution (Windows Command Prompt):
+
+```cmd
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r hadoop hdfs:///sg_mobility/canonical/rainfall.csv hdfs:///sg_mobility/canonical/carpark.csv > evidence\m4-output.txt 2> evidence\m4-yarn-log.txt
+```
+
+Independent reference calculations using exact rational arithmetic for canonical
+parking observations and the checked M2 station-day rainfall summaries matched
+all qualifying carpark IDs, supporting counts, six-decimal means and differences.
+The top-ten order also matched when ranked by unrounded absolute differences.
+Signed zero in the saved decimal output is numerically equivalent to zero.
+
+The [sample output](../../evidence/m4-sample-output.txt),
+[sample log](../../evidence/m4-sample-log.txt),
+[full results](../../evidence/m4-output.txt),
+[YARN execution log](../../evidence/m4-yarn-log.txt) and
+[application screenshot](../../evidence/m4--yarn-applications.png)
+are saved under evidence/.
+
+### Findings
+September contained nine widespread-rainfall dates, twelve dates with no recorded
+rainfall among eligible stations, and nine intermediate dates excluded from this
+comparison. There were 1,996 qualifying carparks; another four carparks represented
+on the retained weather dates failed the minimum of three days per group.
+The first-stage counters also reported 23 ineligible observed station-days.
+
+EPL had the largest absolute difference. Its mean observed daily occupancy was
+59.19% on widespread-rainfall days and 89.48% on no-recorded-rainfall days, a signed
+difference of -30.29 percentage points. The comparison used nine and twelve days,
+with 214 and 289 valid parking observations respectively.
+
+U24 and T3 showed differences in the opposite direction: their mean occupancy
+was higher on widespread-rainfall days by 29.52 and 26.02 percentage points.
+Both increases and decreases therefore appear among the largest differences;
+these results do not establish a uniform weather effect across carparks.
+
+| Rank | Carpark | Widespread-rainfall mean occupancy | No-recorded-rainfall mean occupancy | Difference (percentage points) | Supporting days (rain / no rain) |
+|---|---|---:|---:|---:|---:|
+| 1 | EPL | 59.19% | 89.48% | -30.29 | 9 / 12 |
+| 2 | U24 | 61.89% | 32.37% | 29.52 | 9 / 12 |
+| 3 | T3 | 51.03% | 25.00% | 26.02 | 9 / 12 |
+| 4 | C17 | 39.81% | 15.08% | 24.73 | 9 / 12 |
+| 5 | CK66 | 15.28% | 39.84% | -24.55 | 9 / 12 |
+| 6 | L8 | 75.19% | 50.84% | 24.34 | 9 / 12 |
+| 7 | SB46 | 44.04% | 20.25% | 23.79 | 9 / 12 |
+| 8 | T1 | 43.84% | 21.53% | 22.30 | 9 / 12 |
+| 9 | HG53 | 52.22% | 74.35% | -22.13 | 7 / 11 |
+| 10 | U5 | 46.59% | 25.06% | 21.53 | 9 / 12 |
+
+Operators could prioritise these carparks for further review of day-of-week
+patterns, local conditions and sampling coverage. For example, HG53 has fewer
+supporting observations and dates than most of the other top-ten carparks.
+The ranking identifies exploratory associations, not causal effects of rainfall.
+
+### Data Limitations
+Weather groups describe the proportion of eligible reporting stations, not the
+proportion of Singapore's land area or rainfall at an individual carpark.
+The eligible station count can vary by date. Coverage of at least 90% still allows
+missing rainfall slots, so no recorded rainfall does not prove no rain occurred.
+
+Parking daily means are sample-weighted within a day and days are equally weighted
+within each weather group. Irregular sampling, small daily observation counts and
+different observed hours can affect comparisons; observation counts are reported.
+Weekday/weekend patterns, events and other factors are not controlled. Results
+show associations and do not establish that rainfall caused occupancy changes.
+Source timestamps outside September are excluded even if response timestamps
+fall in September. Missing observations are never replaced with zero occupancy.
