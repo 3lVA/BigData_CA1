@@ -1,0 +1,113 @@
+No configs found; falling back on auto-configuration
+No configs specified for hadoop runner
+Looking for hadoop binary in /opt/hadoop/bin...
+Found hadoop binary: /opt/hadoop/bin/hadoop
+Using Hadoop version 3.3.6
+Looking for Hadoop streaming jar in /opt/hadoop...
+Found Hadoop streaming jar: /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar
+Creating temp directory /tmp/m3_parking_pressure.root.20261119.210658.358988
+uploading working dir files to hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988/files/wd...
+Copying other local files to hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988/files/
+Running step 1 of 1...
+  packageJobJar: [/tmp/hadoop-unjar8004357778861348343/] [] /tmp/streamjob5894761870706932778.jar tmpDir=null
+  2026-11-19 21:07:09,256 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-19 21:07:09,386 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-19 21:07:09,504 [main] INFO  org.apache.hadoop.mapreduce.JobResourceUploader  - Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1795002805512_0006
+  2026-11-19 21:07:09,896 [main] INFO  org.apache.hadoop.mapred.FileInputFormat  - Total input files to process : 1
+  2026-11-19 21:07:10,474 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - number of splits:28
+  2026-11-19 21:07:10,835 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Submitting tokens for job: job_1795002805512_0006
+  2026-11-19 21:07:10,835 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Executing with tokens: []
+  2026-11-19 21:07:10,937 [main] INFO  org.apache.hadoop.conf.Configuration  - resource-types.xml not found
+  2026-11-19 21:07:10,937 [main] INFO  org.apache.hadoop.yarn.util.resource.ResourceUtils  - Unable to find 'resource-types.xml'.
+  2026-11-19 21:07:11,180 [main] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl  - Submitted application application_1795002805512_0006
+  2026-11-19 21:07:11,199 [main] INFO  org.apache.hadoop.mapreduce.Job  - The url to track the job: http://resourcemanager:8088/proxy/application_1795002805512_0006/
+  2026-11-19 21:07:11,200 [main] INFO  org.apache.hadoop.mapreduce.Job  - Running job: job_1795002805512_0006
+  2026-11-19 21:07:16,249 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0006 running in uber mode : false
+  2026-11-19 21:07:16,249 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 0% reduce 0%
+  2026-11-19 21:07:21,287 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 4% reduce 0%
+  2026-11-19 21:07:22,294 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 7% reduce 0%
+  2026-11-19 21:07:24,304 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 11% reduce 0%
+  2026-11-19 21:07:25,309 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 18% reduce 0%
+  2026-11-19 21:07:26,313 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 29% reduce 0%
+  2026-11-19 21:07:29,339 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 36% reduce 0%
+  2026-11-19 21:07:30,342 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 46% reduce 0%
+  2026-11-19 21:07:33,368 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 50% reduce 0%
+  2026-11-19 21:07:34,372 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 61% reduce 0%
+  2026-11-19 21:07:35,377 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 64% reduce 0%
+  2026-11-19 21:07:37,384 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 68% reduce 0%
+  2026-11-19 21:07:38,387 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 75% reduce 0%
+  2026-11-19 21:07:39,392 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 82% reduce 0%
+  2026-11-19 21:07:42,405 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 89% reduce 27%
+  2026-11-19 21:07:43,409 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 27%
+  2026-11-19 21:07:45,415 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 100%
+  2026-11-19 21:07:46,424 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0006 completed successfully
+  2026-11-19 21:07:46,502 [main] INFO  org.apache.hadoop.mapreduce.Job  - Counters: 55
+  	File System Counters
+  		FILE: Number of bytes read=5652321
+  		FILE: Number of bytes written=19449852
+  		FILE: Number of read operations=0
+  		FILE: Number of large read operations=0
+  		FILE: Number of write operations=0
+  		HDFS: Number of bytes read=116782788
+  		HDFS: Number of bytes written=12554108
+  		HDFS: Number of read operations=89
+  		HDFS: Number of large read operations=0
+  		HDFS: Number of write operations=2
+  		HDFS: Number of bytes read erasure-coded=0
+  	Job Counters 
+  		Killed map tasks=1
+  		Launched map tasks=28
+  		Launched reduce tasks=1
+  		Rack-local map tasks=28
+  		Total time spent by all maps in occupied slots (ms)=79989
+  		Total time spent by all reduces in occupied slots (ms)=17019
+  		Total time spent by all map tasks (ms)=79989
+  		Total time spent by all reduce tasks (ms)=17019
+  		Total vcore-milliseconds taken by all map tasks=79989
+  		Total vcore-milliseconds taken by all reduce tasks=17019
+  		Total megabyte-milliseconds taken by all map tasks=81908736
+  		Total megabyte-milliseconds taken by all reduce tasks=17427456
+  	Map-Reduce Framework
+  		Map input records=1727689
+  		Map output records=1426957
+  		Map output bytes=127881350
+  		Map output materialized bytes=5652483
+  		Input split bytes=2968
+  		Combine input records=1426957
+  		Combine output records=61690
+  		Reduce input groups=61669
+  		Reduce shuffle bytes=5652483
+  		Reduce input records=61690
+  		Reduce output records=61669
+  		Spilled Records=123380
+  		Shuffled Maps =28
+  		Failed Shuffles=0
+  		Merged Map outputs=28
+  		GC time elapsed (ms)=375
+  		CPU time spent (ms)=40090
+  		Physical memory (bytes) snapshot=9526927360
+  		Virtual memory (bytes) snapshot=80868507648
+  		Total committed heap usage (bytes)=7602176000
+  		Peak Map Physical memory (bytes)=337395712
+  		Peak Map Virtual memory (bytes)=2793844736
+  		Peak Reduce Physical memory (bytes)=313380864
+  		Peak Reduce Virtual memory (bytes)=2806456320
+  	Shuffle Errors
+  		BAD_ID=0
+  		CONNECTION=0
+  		IO_ERROR=0
+  		WRONG_LENGTH=0
+  		WRONG_MAP=0
+  		WRONG_REDUCE=0
+  	File Input Format Counters 
+  		Bytes Read=116779820
+  	File Output Format Counters 
+  		Bytes Written=12554108
+  2026-11-19 21:07:46,502 [main] INFO  org.apache.hadoop.streaming.StreamJob  - Output directory: hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988/output
+Attempting to fetch counters from logs...
+Can't fetch history log; missing job ID
+No counters found
+job output is in hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988/output
+Streaming final output from hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988/output...
+Removing HDFS temp directory hdfs:///user/root/tmp/mrjob/m3_parking_pressure.root.20261119.210658.358988...
+Removing temp directory /tmp/m3_parking_pressure.root.20261119.210658.358988...

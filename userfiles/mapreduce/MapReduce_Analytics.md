@@ -108,3 +108,73 @@ meets the 90% eligibility threshold.
 The downloaded CSV lacks source-update and retrieval timestamps.
 Those canonical fields are blank, and this limitation is recorded in
 the rainfall preparation profile. Only September 2026 was analysed.
+
+## M3 Daily Parking Pressure
+
+### Method
+The job reads canonical carpark observations and retains lot type C.
+For each observation, occupancy is (total_lots - lots_available) /
+total_lots. Capacity must be positive, and available lots must be between
+zero and capacity. Preparation removes duplicate observations before analysis.
+
+One MapReduce stage groups observations by carpark ID and source
+observation date in Singapore time. A combiner aggregates intermediate
+counts, occupancy sums, maxima and counts at or above 90% occupancy.
+The reducer reports the valid observation count, mean occupancy ratio,
+maximum occupancy ratio and fraction of observations at or above 90%.
+Each observation uses its own capacity and receives equal weight in the mean.
+Ratios are reported to six decimal places.
+
+### Validation and Execution
+The sample contained the header and first ten canonical observations.
+The inline output matched calculations from these source records:
+
+| Carpark | Source date | Valid observations | Mean occupancy ratio | Maximum occupancy ratio | Fraction at least 90% |
+|---|---|---:|---:|---:|---:|
+| A10 | 2026-08-31 | 1 | 0.625000 | 0.625000 | 0.000000 |
+| A10 | 2026-09-01 | 9 | 0.592014 | 0.656250 | 0.000000 |
+
+This checked aggregation and source-date grouping. The sample did not
+contain readings reaching the 90% threshold, other lot types or changing
+capacities, so it did not independently exercise those cases.
+
+The full canonical dataset was processed using the Hadoop runner:
+
+| Stage | Application ID | Final status |
+|---|---|---|
+| Daily parking aggregation | application_1795002805512_0006 | SUCCEEDED |
+
+The [sample results](../../evidence/m3-sample-output.txt),
+[sample log](../../evidence/m3-sample-log.txt),
+[full results](../../evidence/m3-output.txt),
+[execution log](../../evidence/m3-yarn-log.txt) and
+[YARN application screenshot](../../evidence/m3-yarn-applications.png)
+are saved under evidence/.
+
+### Findings
+For carpark A10 on 3 September 2026, the full output recorded:
+
+| Measure | Result |
+|---|---:|
+| Valid observations | 24 |
+| Mean occupancy | 60.42% |
+| Maximum occupancy | 100% |
+| Observations at or above 90% occupancy | 3 |
+| Fraction of observations at or above 90% occupancy | 12.5% |
+
+This example shows that a moderate daily average can conceal periods of
+high parking pressure. Operators could use both the mean and the high-pressure
+fraction to identify carpark-days for closer review. This is an illustrative
+carpark-day, not a claim that A10 was the busiest carpark in the dataset.
+
+### Data Limitations
+Statistics are sample-weighted rather than time-weighted. Sampling intervals
+may vary, so 12.5% of observations does not necessarily mean 12.5% of the day.
+Days with few observations provide limited evidence of daily conditions.
+
+Grouping uses observed_at, the source carpark update timestamp, rather than
+the API response date or the filename. Some source observations predate
+September 2026 and remain assigned to their actual source dates.
+
+The downloaded data lacks retrieval timestamps, so retrieved_at is blank.
+Occupancy snapshots do not measure vehicle arrivals, turnover or parking duration.
