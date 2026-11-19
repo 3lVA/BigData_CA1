@@ -494,6 +494,185 @@ def prepare_rainfall():
     )
 
 
+def prepare_carpark():
+    source_path = RAW / "carpark_20260901_20260930.csv"
+    output_path = CANONICAL / "carpark.csv"
+    quarantine_path = QUARANTINE / "carpark_quarantine.csv"
+    singapore = timezone(timedelta(hours=8))
+
+    source_columns = [
+        "snapshot_time",
+        "carpark_number",
+        "lot_type",
+        "lots_available",
+        "total_lots",
+        "update_datetime",
+    ]
+
+    observations = {}
+    total = 0
+    invalid = 0
+    duplicates = 0
+    first_response = None
+    last_response = None
+
+    # Validate all lot types first. M3 will select car lot type C.
+    with source_path.open(newline="", encoding="utf-8-sig") as source, \
+         quarantine_path.open("w", newline="", encoding="utf-8") as rejected:
+        reader = csv.DictReader(source)
+        quarantine_writer = csv.writer(rejected)
+        quarantine_writer.writerow(["reason", "raw_record"])
+
+        if not set(source_columns).issubset(reader.fieldnames or []):
+            raise ValueError("The carpark CSV has unexpected headers.")
+
+        for row in reader:
+            total += 1
+            reason = ""
+
+            if None in row or any(
+                row.get(column) is None for column in source_columns
+            ):
+                invalid += 1
+                quarantine_writer.writerow([
+                    "wrong_column_count",
+                    json.dumps(row),
+                ])
+                continue
+
+            response_text, carpark_id, lot_type, available_text, capacity_text, observed_text = [
+                row[column].strip()
+                for column in source_columns
+            ]
+
+            # Keep identifiers as strings and require a lot type for the key.
+            if not carpark_id or not lot_type:
+                reason = "missing_carpark_or_lot_type"
+
+            if not reason:
+                try:
+                    capacity = int(capacity_text)
+                    available = int(available_text)
+                except ValueError:
+                    reason = "invalid_integer"
+                else:
+                    if capacity <= 0 or not 0 <= available <= capacity:
+                        reason = "invalid_capacity_or_availability"
+
+            if not reason:
+                try:
+                    observed = datetime.fromisoformat(
+                        observed_text.replace("Z", "+00:00")
+                    )
+                    # The API's per-carpark update times lack an offset.
+                    # Interpret those source times as Singapore local time.
+                    if observed.tzinfo is None:
+                        observed = observed.replace(tzinfo=singapore)
+                    observed = observed.astimezone(singapore)
+                except ValueError:
+                    reason = "invalid_source_observation_timestamp"
+
+            if not reason:
+                try:
+                    response = datetime.fromisoformat(
+                        response_text.replace("Z", "+00:00")
+                    )
+                    if response.tzinfo is None:
+                        raise ValueError
+                    response = response.astimezone(singapore)
+                except ValueError:
+                    reason = "invalid_or_missing_timezone_response"
+
+            if reason:
+                invalid += 1
+                quarantine_writer.writerow([reason, json.dumps(row)])
+                continue
+
+            first_response = min(first_response, response) if first_response else response
+            last_response = max(last_response, response) if last_response else response
+
+            # Repeated API snapshots can contain the same source observation.
+            # Keep one observation per carpark, lot type and source update time.
+            key = (carpark_id, lot_type, observed)
+            if key in observations:
+                previous_capacity, previous_available, previous_response = observations[key]
+
+                if (capacity, available) != (previous_capacity, previous_available):
+                    # The CSV lacks retrieval time, so the required conflict
+                    # ordering cannot be established. Preserve and investigate.
+                    quarantine_writer.writerow([
+                        "conflicting_parking_without_retrieval_time",
+                        json.dumps(row),
+                    ])
+                    raise ValueError(
+                        f"Conflicting parking values for {key}"
+                    )
+
+                duplicates += 1
+                quarantine_writer.writerow([
+                    "repeated_source_observation",
+                    json.dumps(row),
+                ])
+
+                # Values agree. Retain the latest actual API response timestamp.
+                if response > previous_response:
+                    observations[key] = (capacity, available, response)
+                continue
+
+            observations[key] = (capacity, available, response)
+
+    temporary_path = CANONICAL / "carpark.csv.tmp"
+    lot_counts = {}
+    with temporary_path.open("w", newline="", encoding="utf-8") as destination:
+        writer = csv.writer(destination)
+        writer.writerow([
+            "carpark_id",
+            "lot_type",
+            "observed_at",
+            "total_lots",
+            "lots_available",
+            "response_at",
+            "retrieved_at",
+        ])
+
+        for (carpark_id, lot_type, observed), values in sorted(observations.items()):
+            capacity, available, response = values
+            lot_counts[lot_type] = lot_counts.get(lot_type, 0) + 1
+
+            # Preserve the carpark's source time and API response time separately.
+            # Actual retrieval time is unavailable in the downloaded CSV.
+            writer.writerow([
+                carpark_id,
+                lot_type,
+                observed.isoformat(),
+                capacity,
+                available,
+                response.isoformat(),
+                "",
+            ])
+
+    temporary_path.replace(output_path)
+
+    observation_times = [key[2] for key in observations]
+    observed_start = min(observation_times).isoformat() if observation_times else None
+    observed_end = max(observation_times).isoformat() if observation_times else None
+    response_start = first_response.isoformat() if first_response else None
+    response_end = last_response.isoformat() if last_response else None
+
+    print(
+        f"Carpark: input={total}, accepted={len(observations)}, "
+        f"excluded={invalid + duplicates}, invalid={invalid}, "
+        f"duplicates={duplicates}"
+    )
+    print(f"Carpark accepted lot types: {dict(sorted(lot_counts.items()))}")
+    print(f"Carpark source observation period: {observed_start} to {observed_end}")
+    print(f"Carpark API response period: {response_start} to {response_end}")
+    print(
+        "Carpark provenance: naive source update times use UTC+08:00; "
+        "retrieved_at is unavailable and left blank."
+    )
+
+
 # Run preparation when this script is executed directly. Create output folders
 # if needed so the same command can be used on a fresh project copy.
 if __name__ == "__main__":
@@ -503,3 +682,4 @@ if __name__ == "__main__":
     prepare_bus_stops()
     prepare_bus_od()
     prepare_rainfall()
+    prepare_carpark()
