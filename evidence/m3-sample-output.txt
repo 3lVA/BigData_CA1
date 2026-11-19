@@ -1,0 +1,2 @@
+["A10", "2026-08-31"]	{"valid_observations": 1, "mean_occupancy_ratio": "0.625000", "max_occupancy_ratio": "0.625000", "observations_at_least_90_percent": 0, "fraction_at_least_90_percent": "0.000000"}
+["A10", "2026-09-01"]	{"valid_observations": 9, "mean_occupancy_ratio": "0.592014", "max_occupancy_ratio": "0.656250", "observations_at_least_90_percent": 0, "fraction_at_least_90_percent": "0.000000"}
