@@ -1,0 +1,159 @@
+{
+  "input_rows": 761445,
+  "accepted_unique_slots": 761445,
+  "excluded_rows": 0,
+  "duplicates_removed": 0,
+  "station_count": 89,
+  "timezone": "Asia/Singapore (UTC+08:00)",
+  "observed_start": "2026-09-01T00:00:00+08:00",
+  "observed_end": "2026-09-30T23:55:00+08:00",
+  "slot_rule": "Exact five-minute timestamps; off-grid rows quarantined.",
+  "unavailable_source_fields": [
+    "source_updated_at",
+    "retrieved_at"
+  ],
+  "conflict_rule": "Stop for investigation when version timestamps are unavailable.",
+  "metadata_rule": "Latest observation time, then lexicographically greatest station name.",
+  "station_name_aliases": {
+    "S06": [
+      "Paya Lebar Airport",
+      "Paya Lebar Meteorological Station"
+    ],
+    "S07": [
+      "Lornie Road",
+      "Macritchie Reservoir"
+    ],
+    "S08": [
+      "Lower Peirce Reservoir",
+      "Upper Thomson Road"
+    ],
+    "S100": [
+      "Sungei Kadut Street 3",
+      "Woodlands Road"
+    ],
+    "S102": [
+      "Semakau Island",
+      "Semakau Island Landfill"
+    ],
+    "S106": [
+      "Jalan Noordin (Pulau Ubin)",
+      "Pulau Ubin"
+    ],
+    "S107": [
+      "East Coast Park",
+      "East Coast Parkway"
+    ],
+    "S108": [
+      "Marina Barrage",
+      "Marina Gardens Drive"
+    ],
+    "S116": [
+      "Pasir Panjang Terminal",
+      "West Coast Highway"
+    ],
+    "S117": [
+      "Banyan Road",
+      "Banyan Road (Jurong Island)"
+    ],
+    "S120": [
+      "Botanic Garden",
+      "Holland Road"
+    ],
+    "S180": [
+      "Taman Jurong Green",
+      "Taman Jurong Greens"
+    ],
+    "S201": [
+      "Clementi Park",
+      "Sunset Way"
+    ],
+    "S210": [
+      "Woodlands Centre",
+      "Woodlands Centre Road"
+    ],
+    "S23": [
+      "S23",
+      "Tengah Meteorological Station"
+    ],
+    "S24": [
+      "Changi Meteorological Station",
+      "Upper Changi Road North"
+    ],
+    "S300": [
+      "Bedok Reservoir",
+      "S300"
+    ],
+    "S301": [
+      "Neo Tiew Lane 2",
+      "S301"
+    ],
+    "S302": [
+      "S302",
+      "Tengeh Reservoir"
+    ],
+    "S303": [
+      "Ponyan Reservoir",
+      "S303"
+    ],
+    "S305": [
+      "S305",
+      "Sarimbum Reservoir"
+    ],
+    "S306": [
+      "Murnane Service Reservoir",
+      "S306"
+    ],
+    "S307": [
+      "Pulau Tekong Reservoir",
+      "S307"
+    ],
+    "S308": [
+      "S308",
+      "Seletar Reservoir"
+    ],
+    "S60": [
+      "Artillery Avenue (Sentosa)",
+      "Sentosa"
+    ],
+    "S66": [
+      "Kranji Reservoir",
+      "Kranji Way"
+    ],
+    "S80": [
+      "S80",
+      "Sembawang Meteorological Station"
+    ],
+    "S84": [
+      "Simei Avenue",
+      "Tampines Avenue 5"
+    ],
+    "S902": [
+      "S902",
+      "Yishun Walk"
+    ],
+    "S903": [
+      "Lorong Kismis",
+      "S903"
+    ],
+    "S904": [
+      "Holland Grove Road",
+      "S904"
+    ],
+    "S905": [
+      "Hillcrest Road",
+      "S905"
+    ],
+    "S907": [
+      "Rivervale Drive",
+      "S907"
+    ],
+    "S908": [
+      "Fernvale Lane",
+      "S908"
+    ],
+    "S909": [
+      "S909",
+      "Seraya Road"
+    ]
+  }
+}
