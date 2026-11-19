@@ -9,6 +9,25 @@ origin–destination pair. Stage 2 selects the top ten pairs,
 breaking ties by origin and destination IDs, and attaches both
 stop descriptions.
 
+### MapReduce Logic Diagram
+
+```mermaid
+flowchart TD
+    A["Canonical bus_od.csv: validated and deduplicated"] --> B["Stage 1 mapper: emit key = month, day type, origin ID, destination ID; value = trips"]
+    B --> C["Optional combiner: sum trips locally for each key"]
+    C --> D["Shuffle and sort: group the same directed pair across all hours"]
+    D --> E["Stage 1 reducer: sum trips; emit key = month, day type; value = total, origin ID, destination ID"]
+    E --> F["Stage 2 shuffle and sort: group all pair totals by month and day type"]
+    F --> G["Stage 2 reducer: keep top ten by total descending, then origin and destination IDs ascending"]
+    H["Canonical bus_stops.csv: metadata side file"] --> I["Load stop-description lookup once per Stage 2 reducer"]
+    I --> G
+    G --> J["Look up both endpoint descriptions; disclose unmatched IDs across all pairs in the group"]
+    J --> K["Output: top ten directed pairs and unmatched stop IDs per month and day type"]
+```
+
+The two reducer stages require different grouping keys. No custom mapper is
+needed in Stage 2; Stage 1 output is forwarded for regrouping.
+
 ### Validation and Execution
 The ten-record canonical sample matched the expected rankings
 and preserved stop-ID leading zeroes. The full dataset was then
@@ -53,6 +72,26 @@ descending, with station ID and date used to break ties.
 The output retains all daily summaries and a separate partial-results
 category. Completely absent station-days within the reporting scope
 have zero observations, zero coverage and null rainfall.
+
+### MapReduce Logic Diagram
+
+```mermaid
+flowchart TD
+    A["Canonical rainfall.csv: one valid reading per station and five-minute slot"] --> B["Stage 1 mapper: convert to Singapore date; emit key = station ID, date; value = rainfall, count 1"]
+    B --> C["Optional combiner: sum rainfall and observation counts locally"]
+    C --> D["Shuffle and sort: group by station ID and Singapore date"]
+    D --> E["Stage 1 reducer: daily rainfall total, count and coverage = count / 288; emit summary with a common key"]
+    E --> F["Stage 2 shuffle: bring daily summaries together under the common key"]
+    F --> G["Stage 2 reducer: derive input station IDs and date window; fill absent station-days with count 0 and null rainfall"]
+    G --> H["Output every daily summary"]
+    G --> I{"At least 260 observations?"}
+    I -->|Yes| J["Rank eligible station-days by rainfall descending, then station ID and date ascending"]
+    J --> K["Output top ten eligible station-days"]
+    I -->|No| L["Output separate partial results, including days with no observations"]
+```
+
+The second stage compares daily summaries for ranking and reports gaps within
+the input-derived station and calendar scope. No custom mapper is needed there.
 
 ### Validation and Execution
 A controlled sample used 807 actual readings from 22 September 2026.
@@ -124,6 +163,22 @@ The reducer reports the valid observation count, mean occupancy ratio,
 maximum occupancy ratio and fraction of observations at or above 90%.
 Each observation uses its own capacity and receives equal weight in the mean.
 Ratios are reported to six decimal places.
+
+### MapReduce Logic Diagram
+
+```mermaid
+flowchart TD
+    A["Canonical carpark.csv: validated and deduplicated observations"] --> B["Mapper: retain lot type C; check positive capacity and valid available lots"]
+    B --> C["Use Singapore source observation date; calculate occupancy = occupied lots / capacity and indicator for occupancy at least 90%"]
+    C --> D["Emit key = carpark ID, source date; value = count 1, occupancy sum, maximum, threshold count"]
+    D --> E["Optional combiner: combine counts, sums, maxima and threshold counts locally"]
+    E --> F["Shuffle and sort: group by carpark ID and source date"]
+    F --> G["Reducer: combine summaries; mean = occupancy sum / count; high-pressure fraction = threshold count / count"]
+    G --> H["Output per carpark-day: valid count, mean occupancy, maximum occupancy, threshold count and fraction"]
+```
+
+Only one stage is required because all statistics use the same carpark-day
+key. The combiner preserves sums and counts rather than averaging averages.
 
 ### Validation and Execution
 The sample contained the header and first ten canonical observations.
