@@ -1,0 +1,26 @@
+HDFS provenance verification against locally calculated SHA-256 fingerprints
+This does not compare against a lecturer-issued manifest.
+PASS /sg_mobility/raw/bus_stops.csv SHA256 29767608073b1c379cc816054c07ac5cd448ce82bebcd65740e19d4030da138c
+PASS /sg_mobility/raw/carpark_20260901_20260930.csv SHA256 9b4af13d990b9c702f241a8d4d4cdd3154a6ac66a9258bf0ef084600a27f0664
+PASS /sg_mobility/raw/origin_destination_bus_202609.csv SHA256 1b45454a55e04051aa7ad1f678b209c0b4ca96e3f9ce9e38ea96223a5d7c6030
+PASS /sg_mobility/raw/rainfall_20260901_20260930.csv SHA256 e61a74d98bac6b4b1ede00547e7338511538378c163caedc68e5b0ea26eea04d
+PASS /sg_mobility/canonical/bus_od.csv SHA256 e8f11903fce9724853eb330ec6eba379a84297586fd97f92b2fd16a55d496f9d
+PASS /sg_mobility/canonical/bus_stops.csv SHA256 44d4b85b1f5aca5dc5a200354ba86794b10a87d3a80a988ab051c7239b9dcd71
+PASS /sg_mobility/canonical/carpark.csv SHA256 bdf1d424fdda832ef4a9fe5b42e9f81051d30633d9f721034733abd3ea41ec12
+PASS /sg_mobility/canonical/rainfall.csv SHA256 cc15748eb44510b894a7e30b5f1512da0ad64adfd364c433b5470b5739db2e53
+PASS /sg_mobility/canonical/weather_stations.csv SHA256 f3f305d4372df2ea0dcd1cf610c145789cef09c7c94559d72a3e91b4aa06eec4
+PASS /sg_mobility/quarantine/bus_od_quarantine.csv SHA256 e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35
+PASS /sg_mobility/quarantine/bus_stops_quarantine.csv SHA256 e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35
+PASS /sg_mobility/quarantine/carpark_quarantine.csv SHA256 97d5cd7e6f77a377fa6e0013c6879e8a718153f49f5f6089a940f251dc47aed6
+PASS /sg_mobility/quarantine/rainfall_quarantine.csv SHA256 e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35
+PASS /sg_mobility/metadata/rainfall-profile.json SHA256 37d8ab87cf0ce0b24de4b4492e5dd8879446e142663604349659ea8a998ec002
+PASS /sg_mobility/metadata/manifest.json SHA256 8fd2d235fca395a63a881f466cf8bc751b86390e5e347e314de76712a275cc84
+PASS /sg_mobility/metadata/data_provenance.md SHA256 f5960b45e80cf51a941a41872d4b18561a504ffd2fa33af273226a9e63028aef
+All 16 HDFS files match their local contents.
+
+Metadata directory listing:
+Found 3 items
+-rw-r--r--   2 root supergroup      11417 2026-11-20 06:22 /sg_mobility/metadata/data_provenance.md
+-rw-r--r--   2 root supergroup      13596 2026-11-20 06:22 /sg_mobility/metadata/manifest.json
+-rw-r--r--   2 root supergroup       3196 2026-11-20 06:22 /sg_mobility/metadata/rainfall-profile.json
+

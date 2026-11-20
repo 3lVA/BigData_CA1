@@ -1,0 +1,392 @@
+{
+  "manifest_type": "student_generated_local_file_inventory",
+  "generated_at": "2026-11-20T14:21:51+08:00",
+  "timezone": "Asia/Singapore (UTC+08:00)",
+  "lecturer_manifest_verification": {
+    "status": "not_available_in_reviewed_project_files",
+    "explanation": "Hashes identify the current files; no lecturer-issued expected hashes were available for comparison. This is not a lecturer manifest."
+  },
+  "sources": {
+    "lta": {
+      "organisation": "Land Transport Authority",
+      "dataset_page": "https://datamall.lta.gov.sg/content/datamall/en/dynamic-data.html",
+      "bus_od_api": "https://datamall2.mytransport.sg/ltaodataservice/PV/ODBus",
+      "bus_stops_api": "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
+    },
+    "rainfall": {
+      "organisation": "National Environment Agency via data.gov.sg",
+      "dataset_page": "https://data.gov.sg/datasets/d_6580738cdd7db79374ed3152159fbd69/view",
+      "api": "https://api-open.data.gov.sg/v2/real-time/api/rainfall",
+      "documented_unit": "mm",
+      "documented_reading_type": "five-minute interval total"
+    },
+    "parking": {
+      "organisation": "HDB via data.gov.sg",
+      "dataset_page": "https://data.gov.sg/datasets/d_ca933a644e55d34fe21f28b8052fac63/view",
+      "api": "https://api.data.gov.sg/v1/transport/carpark-availability"
+    }
+  },
+  "original_retrieved_at": null,
+  "retrieval_time_note": "Original API request/retrieval timestamps were not retained in the raw CSVs. File modification times are not substituted.",
+  "preparation": {
+    "script": "userfiles/prepare_data.py",
+    "sha256": "03cc020224c5b52408ea927970fa28976224cc7d892e044864f1087bfb84e480",
+    "changes_raw_files": false
+  },
+  "counts": {
+    "bus_stops": {
+      "input_rows": 5209,
+      "accepted_rows": 5209,
+      "excluded_rows": 0
+    },
+    "bus_od": {
+      "input_rows": 5863920,
+      "accepted_rows": 5863920,
+      "excluded_rows": 0,
+      "unmatched_stop_rows_retained": 7995
+    },
+    "rainfall": {
+      "input_rows": 761445,
+      "accepted_rows": 761445,
+      "excluded_rows": 0,
+      "stations": 89
+    },
+    "carpark": {
+      "input_rows": 1745692,
+      "accepted_rows": 1727688,
+      "excluded_rows": 18004,
+      "invalid_rows": 3908,
+      "repeated_observations_removed": 14096,
+      "lot_type_counts": {
+        "C": 1426957,
+        "H": 151085,
+        "Y": 149646
+      }
+    }
+  },
+  "rainfall_reporting_scope": {
+    "station_count": 89,
+    "observed_station_days": 2654,
+    "eligible_station_days": 2631,
+    "partial_observed_station_days": 23,
+    "reporting_scope_station_days": 2670,
+    "absent_station_days_in_scope": 16,
+    "missing_five_minute_slots_in_scope": 7515
+  },
+  "parking_cadence": {
+    "response_snapshot_count": 720,
+    "median_response_spacing_seconds": 3600.0,
+    "response_spacing_seconds": {
+      "minimum": 3596.0,
+      "median": 3600.0,
+      "maximum": 3604.0
+    },
+    "interpretation": "Hourly API response snapshots, not five-minute parking measurements. Source update times are irregular; repeated source observations are collapsed. Request times are unavailable."
+  },
+  "metadata_snapshots": {
+    "bus_stops_sha256": "44d4b85b1f5aca5dc5a200354ba86794b10a87d3a80a988ab051c7239b9dcd71",
+    "weather_stations_sha256": "f3f305d4372df2ea0dcd1cf610c145789cef09c7c94559d72a3e91b4aa06eec4",
+    "publisher_metadata_version": null,
+    "historical_validity_dates": null,
+    "weather_station_selection": "Latest observed name per station, then lexicographically greatest name for equal observation times; coordinate changes stop preparation."
+  },
+  "spatial_mapping": {
+    "used": false,
+    "mapping_version": null,
+    "explanation": "M4 joins daily regional rainfall context and parking by actual date; no carpark coordinates or station assignment is created."
+  },
+  "files": [
+    {
+      "path": "userfiles/ca1-data/bus_stops.csv",
+      "bytes": 357464,
+      "sha256": "29767608073b1c379cc816054c07ac5cd448ce82bebcd65740e19d4030da138c",
+      "columns": [
+        "BusStopCode",
+        "RoadName",
+        "Description",
+        "Latitude",
+        "Longitude"
+      ],
+      "data_rows": 5209,
+      "role": "raw",
+      "hdfs_path": "/sg_mobility/raw/bus_stops.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/ca1-data/carpark_20260901_20260930.csv",
+      "bytes": 105658614,
+      "sha256": "9b4af13d990b9c702f241a8d4d4cdd3154a6ac66a9258bf0ef084600a27f0664",
+      "columns": [
+        "snapshot_time",
+        "carpark_number",
+        "lot_type",
+        "lots_available",
+        "total_lots",
+        "update_datetime"
+      ],
+      "data_rows": 1745692,
+      "periods": {
+        "snapshot_time": [
+          "2026-09-01T00:00:37+08:00",
+          "2026-09-30T23:00:36+08:00"
+        ]
+      },
+      "role": "raw",
+      "hdfs_path": "/sg_mobility/raw/carpark_20260901_20260930.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/ca1-data/origin_destination_bus_202609.csv",
+      "bytes": 239594439,
+      "sha256": "1b45454a55e04051aa7ad1f678b209c0b4ca96e3f9ce9e38ea96223a5d7c6030",
+      "columns": [
+        "YEAR_MONTH",
+        "DAY_TYPE",
+        "TIME_PER_HOUR",
+        "PT_TYPE",
+        "ORIGIN_PT_CODE",
+        "DESTINATION_PT_CODE",
+        "TOTAL_TRIPS"
+      ],
+      "data_rows": 5863920,
+      "months": [
+        "2026-09"
+      ],
+      "role": "raw",
+      "hdfs_path": "/sg_mobility/raw/origin_destination_bus_202609.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/ca1-data/rainfall_20260901_20260930.csv",
+      "bytes": 51584840,
+      "sha256": "e61a74d98bac6b4b1ede00547e7338511538378c163caedc68e5b0ea26eea04d",
+      "columns": [
+        "timestamp",
+        "station_id",
+        "station_name",
+        "latitude",
+        "longitude",
+        "rainfall_mm"
+      ],
+      "data_rows": 761445,
+      "role": "raw",
+      "hdfs_path": "/sg_mobility/raw/rainfall_20260901_20260930.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/canonical_data/bus_od.csv",
+      "bytes": 222002663,
+      "sha256": "e8f11903fce9724853eb330ec6eba379a84297586fd97f92b2fd16a55d496f9d",
+      "columns": [
+        "year_month",
+        "day_type",
+        "hour",
+        "origin_stop_id",
+        "destination_stop_id",
+        "total_trips"
+      ],
+      "data_rows": 5863920,
+      "months": [
+        "2026-09"
+      ],
+      "unmatched_metadata_rows": 7995,
+      "role": "canonical",
+      "hdfs_path": "/sg_mobility/canonical/bus_od.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/canonical_data/bus_stops.csv",
+      "bytes": 357462,
+      "sha256": "44d4b85b1f5aca5dc5a200354ba86794b10a87d3a80a988ab051c7239b9dcd71",
+      "columns": [
+        "bus_stop_id",
+        "description",
+        "road_name",
+        "latitude",
+        "longitude"
+      ],
+      "data_rows": 5209,
+      "role": "canonical",
+      "hdfs_path": "/sg_mobility/canonical/bus_stops.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/canonical_data/carpark.csv",
+      "bytes": 116669228,
+      "sha256": "bdf1d424fdda832ef4a9fe5b42e9f81051d30633d9f721034733abd3ea41ec12",
+      "columns": [
+        "carpark_id",
+        "lot_type",
+        "observed_at",
+        "total_lots",
+        "lots_available",
+        "response_at",
+        "retrieved_at"
+      ],
+      "data_rows": 1727688,
+      "periods": {
+        "observed_at": [
+          "2025-11-01T13:45:00+08:00",
+          "2026-09-30T23:01:04+08:00"
+        ],
+        "response_at": [
+          "2026-09-01T00:00:37+08:00",
+          "2026-09-30T23:00:36+08:00"
+        ]
+      },
+      "lot_type_counts": {
+        "C": 1426957,
+        "H": 151085,
+        "Y": 149646
+      },
+      "exact_five_minute_grid_observations": 9464,
+      "missing_field_counts": {
+        "retrieved_at": 1727688
+      },
+      "role": "canonical",
+      "hdfs_path": "/sg_mobility/canonical/carpark.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/canonical_data/rainfall.csv",
+      "bytes": 27213145,
+      "sha256": "cc15748eb44510b894a7e30b5f1512da0ad64adfd364c433b5470b5739db2e53",
+      "columns": [
+        "station_id",
+        "observed_at",
+        "rainfall_mm",
+        "source_updated_at",
+        "retrieved_at"
+      ],
+      "data_rows": 761445,
+      "periods": {
+        "observed_at": [
+          "2026-09-01T00:00:00+08:00",
+          "2026-09-30T23:55:00+08:00"
+        ]
+      },
+      "missing_field_counts": {
+        "source_updated_at": 761445,
+        "retrieved_at": 761445
+      },
+      "station_count": 89,
+      "observed_station_days": 2654,
+      "eligible_station_days": 2631,
+      "partial_observed_station_days": 23,
+      "reporting_scope_station_days": 2670,
+      "absent_station_days_in_scope": 16,
+      "missing_five_minute_slots_in_scope": 7515,
+      "role": "canonical",
+      "hdfs_path": "/sg_mobility/canonical/rainfall.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/canonical_data/weather_stations.csv",
+      "bytes": 3700,
+      "sha256": "f3f305d4372df2ea0dcd1cf610c145789cef09c7c94559d72a3e91b4aa06eec4",
+      "columns": [
+        "station_id",
+        "station_name",
+        "latitude",
+        "longitude"
+      ],
+      "data_rows": 89,
+      "role": "canonical",
+      "hdfs_path": "/sg_mobility/canonical/weather_stations.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/quarantine_data/bus_od_quarantine.csv",
+      "bytes": 19,
+      "sha256": "e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35",
+      "columns": [
+        "reason",
+        "raw_record"
+      ],
+      "data_rows": 0,
+      "role": "quarantine",
+      "hdfs_path": "/sg_mobility/quarantine/bus_od_quarantine.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/quarantine_data/bus_stops_quarantine.csv",
+      "bytes": 19,
+      "sha256": "e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35",
+      "columns": [
+        "reason",
+        "raw_record"
+      ],
+      "data_rows": 0,
+      "role": "quarantine",
+      "hdfs_path": "/sg_mobility/quarantine/bus_stops_quarantine.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/quarantine_data/carpark_quarantine.csv",
+      "bytes": 4181445,
+      "sha256": "97d5cd7e6f77a377fa6e0013c6879e8a718153f49f5f6089a940f251dc47aed6",
+      "columns": [
+        "reason",
+        "raw_record"
+      ],
+      "data_rows": 18004,
+      "exclusion_reasons": {
+        "invalid_capacity_or_availability": 3908,
+        "repeated_source_observation": 14096
+      },
+      "role": "quarantine",
+      "hdfs_path": "/sg_mobility/quarantine/carpark_quarantine.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "userfiles/quarantine_data/rainfall_quarantine.csv",
+      "bytes": 19,
+      "sha256": "e31e9493106ebf1a79659be76435c33bca200259f830b7f04ad1df2b96efdf35",
+      "columns": [
+        "reason",
+        "raw_record"
+      ],
+      "data_rows": 0,
+      "role": "quarantine",
+      "hdfs_path": "/sg_mobility/quarantine/rainfall_quarantine.csv",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    },
+    {
+      "path": "evidence/data-preparation/rainfall-profile.json",
+      "role": "metadata",
+      "hdfs_path": "/sg_mobility/metadata/rainfall-profile.json",
+      "bytes": 3196,
+      "sha256": "37d8ab87cf0ce0b24de4b4492e5dd8879446e142663604349659ea8a998ec002",
+      "hash_origin": "locally_calculated_sha256_of_current_file_bytes",
+      "lecturer_expected_sha256": null,
+      "lecturer_hash_match": null
+    }
+  ],
+  "hdfs_verification_evidence": "evidence/data-preparation/provenance-hdfs-verification.txt"
+}
