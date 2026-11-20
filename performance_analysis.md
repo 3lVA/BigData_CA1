@@ -27,12 +27,12 @@ All application IDs below use the prefix application_1795002805512_.
 
 | Run | Application suffixes, stages 1 / 2 | Complete timing | Task and resource counters | Application status screenshot |
 |---|---|---|---|---|
-| M1 1 | 0014 / 0015 | [Timing](evidence/m1-benchmark-run1-timing.txt) | [Log](evidence/m1-benchmark-run1-log.txt) | [YARN](evidence/m1-benchmark1-yarn-applications.png) |
-| M1 2 | 0016 / 0017 | [Timing](evidence/m1-benchmark-run2-timing.txt) | [Log](evidence/m1-benchmark-run2-log.txt) | [YARN](evidence/m1-benchmark2-yarn-applications.png) |
-| M1 3 | 0018 / 0019 | [Timing](evidence/m1-benchmark-run3-timing.txt) | [Log](evidence/m1-benchmark-run3-log.txt) | [YARN](evidence/m1-benchmark3-yarn-applications.png) |
-| M2 1 | 0020 / 0021 | [Timing](evidence/m2-benchmark-run1-timing.txt) | [Log](evidence/m2-benchmark-run1-log.txt) | [YARN](evidence/m2-benchmark1-yarn-applications.png) |
-| M2 2 | 0022 / 0023 | [Timing](evidence/m2-benchmark-run2-timing.txt) | [Log](evidence/m2-benchmark-run2-log.txt) | [YARN](evidence/m2-benchmark2-yarn-applications.png) |
-| M2 3 | 0024 / 0025 | [Timing](evidence/m2-benchmark-run3-timing.txt) | [Log](evidence/m2-benchmark-run3-log.txt) | [YARN](evidence/m2-benchmark3-yarn-applications.png) |
+| M1 1 | 0014 / 0015 | [Timing](evidence/performance%20analysis/m1/m1-benchmark-run1-timing.txt) | [Log](evidence/performance%20analysis/m1/m1-benchmark-run1-log.txt) | [YARN](evidence/performance%20analysis/m1/m1-benchmark1-yarn-applications.png) |
+| M1 2 | 0016 / 0017 | [Timing](evidence/performance%20analysis/m1/m1-benchmark-run2-timing.txt) | [Log](evidence/performance%20analysis/m1/m1-benchmark-run2-log.txt) | [YARN](evidence/performance%20analysis/m1/m1-benchmark2-yarn-applications.png) |
+| M1 3 | 0018 / 0019 | [Timing](evidence/performance%20analysis/m1/m1-benchmark-run3-timing.txt) | [Log](evidence/performance%20analysis/m1/m1-benchmark-run3-log.txt) | [YARN](evidence/performance%20analysis/m1/m1-benchmark3-yarn-applications.png) |
+| M2 1 | 0020 / 0021 | [Timing](evidence/performance%20analysis/m2/m2-benchmark-run1-timing.txt) | [Log](evidence/performance%20analysis/m2/m2-benchmark-run1-log.txt) | [YARN](evidence/performance%20analysis/m2/m2-benchmark1-yarn-applications.png) |
+| M2 2 | 0022 / 0023 | [Timing](evidence/performance%20analysis/m2/m2-benchmark-run2-timing.txt) | [Log](evidence/performance%20analysis/m2/m2-benchmark-run2-log.txt) | [YARN](evidence/performance%20analysis/m2/m2-benchmark2-yarn-applications.png) |
+| M2 3 | 0024 / 0025 | [Timing](evidence/performance%20analysis/m2/m2-benchmark-run3-timing.txt) | [Log](evidence/performance%20analysis/m2/m2-benchmark-run3-log.txt) | [YARN](evidence/performance%20analysis/m2/m2-benchmark3-yarn-applications.png) |
 
 ## Task and Container Evidence
 
