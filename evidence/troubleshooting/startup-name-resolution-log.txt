@@ -1,0 +1,17 @@
+Selected lines from the startup log pasted during troubleshooting.
+
+namenode-1         | STARTUP_MSG:   host = java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+resourcemanager-1  | 2026-11-18 11:51:22,055 [main] INFO  org.apache.hadoop.service.AbstractService  - Service ResourceManager failed in state STARTED
+resourcemanager-1  | Caused by: java.io.IOException: java.lang.RuntimeException: Could not resolve Kerberos principal name: java.net.UnknownHostException: 218fe0357023: 218fe0357023: Temporary failure in name resolution
+namenode-1         | java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+namenode-1         | Caused by: java.net.UnknownHostException: dfab9d8b1db5: Temporary failure in name resolution
+resourcemanager-1  | Caused by: java.lang.RuntimeException: Could not resolve Kerberos principal name: java.net.UnknownHostException: 218fe0357023: 218fe0357023: Temporary failure in name resolution
+namenode-1         | 2026-11-18 11:51:25,219 [main] ERROR org.apache.hadoop.hdfs.server.namenode.NameNode  - Failed to start namenode.
+namenode-1         | java.io.IOException: java.lang.RuntimeException: Could not resolve Kerberos principal name: java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+namenode-1         | Caused by: java.lang.RuntimeException: Could not resolve Kerberos principal name: java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+resourcemanager-1  | Caused by: java.net.UnknownHostException: 218fe0357023: 218fe0357023: Temporary failure in name resolution
+resourcemanager-1  | Caused by: java.net.UnknownHostException: 218fe0357023: Temporary failure in name resolution
+namenode-1         | Caused by: java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+namenode-1         | 2026-11-18 11:51:25,220 [main] INFO  org.apache.hadoop.util.ExitUtil  - Exiting with status 1: java.io.IOException: java.lang.RuntimeException: Could not resolve Kerberos principal name: java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+namenode-1         | SHUTDOWN_MSG: Shutting down NameNode at java.net.UnknownHostException: dfab9d8b1db5: dfab9d8b1db5: Temporary failure in name resolution
+resourcemanager-1  | SHUTDOWN_MSG: Shutting down ResourceManager at java.net.UnknownHostException: 218fe0357023: 218fe0357023: Temporary failure in name resolution

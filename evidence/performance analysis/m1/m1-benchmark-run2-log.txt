@@ -1,0 +1,238 @@
+No configs found; falling back on auto-configuration
+No configs specified for hadoop runner
+Looking for hadoop binary in /opt/hadoop/bin...
+Found hadoop binary: /opt/hadoop/bin/hadoop
+Using Hadoop version 3.3.6
+Looking for Hadoop streaming jar in /opt/hadoop...
+Found Hadoop streaming jar: /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar
+Creating temp directory /tmp/m1_bus_corridors.root.20261120.024239.154448
+uploading working dir files to hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/files/wd...
+Copying other local files to hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/files/
+Running step 1 of 2...
+  packageJobJar: [/tmp/hadoop-unjar11353724781452128636/] [] /tmp/streamjob17563375689426814829.jar tmpDir=null
+  2026-11-20 02:42:51,128 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-20 02:42:51,220 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-20 02:42:51,316 [main] INFO  org.apache.hadoop.mapreduce.JobResourceUploader  - Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1795002805512_0016
+  2026-11-20 02:42:51,605 [main] INFO  org.apache.hadoop.mapred.FileInputFormat  - Total input files to process : 1
+  2026-11-20 02:42:51,930 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - number of splits:53
+  2026-11-20 02:42:52,131 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Submitting tokens for job: job_1795002805512_0016
+  2026-11-20 02:42:52,131 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Executing with tokens: []
+  2026-11-20 02:42:52,228 [main] INFO  org.apache.hadoop.conf.Configuration  - resource-types.xml not found
+  2026-11-20 02:42:52,228 [main] INFO  org.apache.hadoop.yarn.util.resource.ResourceUtils  - Unable to find 'resource-types.xml'.
+  2026-11-20 02:42:52,259 [main] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl  - Submitted application application_1795002805512_0016
+  2026-11-20 02:42:52,278 [main] INFO  org.apache.hadoop.mapreduce.Job  - The url to track the job: http://resourcemanager:8088/proxy/application_1795002805512_0016/
+  2026-11-20 02:42:52,279 [main] INFO  org.apache.hadoop.mapreduce.Job  - Running job: job_1795002805512_0016
+  2026-11-20 02:42:56,343 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0016 running in uber mode : false
+  2026-11-20 02:42:56,344 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 0% reduce 0%
+  2026-11-20 02:43:03,395 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 2% reduce 0%
+  2026-11-20 02:43:04,401 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 4% reduce 0%
+  2026-11-20 02:43:05,411 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 6% reduce 0%
+  2026-11-20 02:43:07,427 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 8% reduce 0%
+  2026-11-20 02:43:08,432 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 11% reduce 0%
+  2026-11-20 02:43:09,438 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 15% reduce 0%
+  2026-11-20 02:43:11,449 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 17% reduce 0%
+  2026-11-20 02:43:12,455 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 21% reduce 0%
+  2026-11-20 02:43:13,460 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 23% reduce 0%
+  2026-11-20 02:43:14,467 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 25% reduce 0%
+  2026-11-20 02:43:15,470 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 26% reduce 0%
+  2026-11-20 02:43:17,480 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 28% reduce 0%
+  2026-11-20 02:43:18,484 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 30% reduce 0%
+  2026-11-20 02:43:19,488 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 32% reduce 0%
+  2026-11-20 02:43:20,495 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 34% reduce 0%
+  2026-11-20 02:43:21,500 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 36% reduce 0%
+  2026-11-20 02:43:23,512 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 38% reduce 0%
+  2026-11-20 02:43:24,515 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 40% reduce 0%
+  2026-11-20 02:43:25,518 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 42% reduce 0%
+  2026-11-20 02:43:26,522 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 43% reduce 0%
+  2026-11-20 02:43:27,527 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 45% reduce 14%
+  2026-11-20 02:43:29,536 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 47% reduce 14%
+  2026-11-20 02:43:30,540 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 49% reduce 14%
+  2026-11-20 02:43:31,543 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 53% reduce 14%
+  2026-11-20 02:43:32,547 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 55% reduce 14%
+  2026-11-20 02:43:33,552 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 55% reduce 18%
+  2026-11-20 02:43:35,562 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 57% reduce 18%
+  2026-11-20 02:43:36,566 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 60% reduce 18%
+  2026-11-20 02:43:37,569 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 64% reduce 18%
+  2026-11-20 02:43:39,579 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 64% reduce 21%
+  2026-11-20 02:43:41,592 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 66% reduce 21%
+  2026-11-20 02:43:42,595 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 68% reduce 21%
+  2026-11-20 02:43:43,600 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 74% reduce 21%
+  2026-11-20 02:43:45,609 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 74% reduce 25%
+  2026-11-20 02:43:46,614 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 75% reduce 25%
+  2026-11-20 02:43:47,618 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 79% reduce 25%
+  2026-11-20 02:43:48,621 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 81% reduce 25%
+  2026-11-20 02:43:49,628 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 83% reduce 25%
+  2026-11-20 02:43:51,639 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 83% reduce 28%
+  2026-11-20 02:43:52,643 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 87% reduce 28%
+  2026-11-20 02:43:53,647 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 89% reduce 28%
+  2026-11-20 02:43:54,652 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 91% reduce 28%
+  2026-11-20 02:43:55,653 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 92% reduce 28%
+  2026-11-20 02:43:57,663 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 94% reduce 31%
+  2026-11-20 02:43:58,666 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 96% reduce 31%
+  2026-11-20 02:43:59,669 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 98% reduce 31%
+  2026-11-20 02:44:00,672 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 31%
+  2026-11-20 02:44:03,681 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 70%
+  2026-11-20 02:44:09,699 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 88%
+  2026-11-20 02:44:13,711 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 100%
+  2026-11-20 02:44:13,716 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0016 completed successfully
+  2026-11-20 02:44:13,787 [main] INFO  org.apache.hadoop.mapreduce.Job  - Counters: 55
+  	File System Counters
+  		FILE: Number of bytes read=256576572
+  		FILE: Number of bytes written=528344184
+  		FILE: Number of read operations=0
+  		FILE: Number of large read operations=0
+  		FILE: Number of write operations=0
+  		HDFS: Number of bytes read=222221220
+  		HDFS: Number of bytes written=31662583
+  		HDFS: Number of read operations=164
+  		HDFS: Number of large read operations=0
+  		HDFS: Number of write operations=2
+  		HDFS: Number of bytes read erasure-coded=0
+  	Job Counters 
+  		Killed map tasks=1
+  		Launched map tasks=53
+  		Launched reduce tasks=1
+  		Rack-local map tasks=53
+  		Total time spent by all maps in occupied slots (ms)=207784
+  		Total time spent by all reduces in occupied slots (ms)=59715
+  		Total time spent by all map tasks (ms)=207784
+  		Total time spent by all reduce tasks (ms)=59715
+  		Total vcore-milliseconds taken by all map tasks=207784
+  		Total vcore-milliseconds taken by all reduce tasks=59715
+  		Total megabyte-milliseconds taken by all map tasks=212770816
+  		Total megabyte-milliseconds taken by all reduce tasks=61148160
+  	Map-Reduce Framework
+  		Map input records=5863921
+  		Map output records=5863920
+  		Map output bytes=276115909
+  		Map output materialized bytes=256576884
+  		Input split bytes=5565
+  		Combine input records=5863920
+  		Combine output records=5221403
+  		Reduce input groups=631731
+  		Reduce shuffle bytes=256576884
+  		Reduce input records=5221403
+  		Reduce output records=631731
+  		Spilled Records=10442806
+  		Shuffled Maps =53
+  		Failed Shuffles=0
+  		Merged Map outputs=53
+  		GC time elapsed (ms)=761
+  		CPU time spent (ms)=112910
+  		Physical memory (bytes) snapshot=18112450560
+  		Virtual memory (bytes) snapshot=150687322112
+  		Total committed heap usage (bytes)=14208204800
+  		Peak Map Physical memory (bytes)=342306816
+  		Peak Map Virtual memory (bytes)=2796601344
+  		Peak Reduce Physical memory (bytes)=484691968
+  		Peak Reduce Virtual memory (bytes)=2831114240
+  	Shuffle Errors
+  		BAD_ID=0
+  		CONNECTION=0
+  		IO_ERROR=0
+  		WRONG_LENGTH=0
+  		WRONG_MAP=0
+  		WRONG_REDUCE=0
+  	File Input Format Counters 
+  		Bytes Read=222215655
+  	File Output Format Counters 
+  		Bytes Written=31662583
+  2026-11-20 02:44:13,787 [main] INFO  org.apache.hadoop.streaming.StreamJob  - Output directory: hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/step-output/0000
+Attempting to fetch counters from logs...
+Can't fetch history log; missing job ID
+No counters found
+Running step 2 of 2...
+  packageJobJar: [/tmp/hadoop-unjar5567462834338936552/] [] /tmp/streamjob16545348148910300022.jar tmpDir=null
+  2026-11-20 02:44:15,140 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-20 02:44:15,224 [main] INFO  org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider  - Connecting to ResourceManager at resourcemanager/172.22.0.7:8032
+  2026-11-20 02:44:15,345 [main] INFO  org.apache.hadoop.mapreduce.JobResourceUploader  - Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1795002805512_0017
+  2026-11-20 02:44:15,686 [main] INFO  org.apache.hadoop.mapred.FileInputFormat  - Total input files to process : 1
+  2026-11-20 02:44:15,970 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - number of splits:8
+  2026-11-20 02:44:16,185 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Submitting tokens for job: job_1795002805512_0017
+  2026-11-20 02:44:16,185 [main] INFO  org.apache.hadoop.mapreduce.JobSubmitter  - Executing with tokens: []
+  2026-11-20 02:44:16,301 [main] INFO  org.apache.hadoop.conf.Configuration  - resource-types.xml not found
+  2026-11-20 02:44:16,301 [main] INFO  org.apache.hadoop.yarn.util.resource.ResourceUtils  - Unable to find 'resource-types.xml'.
+  2026-11-20 02:44:16,342 [main] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl  - Submitted application application_1795002805512_0017
+  2026-11-20 02:44:16,361 [main] INFO  org.apache.hadoop.mapreduce.Job  - The url to track the job: http://resourcemanager:8088/proxy/application_1795002805512_0017/
+  2026-11-20 02:44:16,362 [main] INFO  org.apache.hadoop.mapreduce.Job  - Running job: job_1795002805512_0017
+  2026-11-20 02:44:24,417 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0017 running in uber mode : false
+  2026-11-20 02:44:24,418 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 0% reduce 0%
+  2026-11-20 02:44:28,446 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 13% reduce 0%
+  2026-11-20 02:44:29,452 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 25% reduce 0%
+  2026-11-20 02:44:30,455 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 38% reduce 0%
+  2026-11-20 02:44:31,459 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 50% reduce 0%
+  2026-11-20 02:44:32,464 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 63% reduce 0%
+  2026-11-20 02:44:33,470 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 75% reduce 0%
+  2026-11-20 02:44:34,474 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 88% reduce 0%
+  2026-11-20 02:44:35,477 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 0%
+  2026-11-20 02:44:37,484 [main] INFO  org.apache.hadoop.mapreduce.Job  -  map 100% reduce 100%
+  2026-11-20 02:44:38,493 [main] INFO  org.apache.hadoop.mapreduce.Job  - Job job_1795002805512_0017 completed successfully
+  2026-11-20 02:44:38,562 [main] INFO  org.apache.hadoop.mapreduce.Job  - Counters: 54
+  	File System Counters
+  		FILE: Number of bytes read=32926051
+  		FILE: Number of bytes written=68379181
+  		FILE: Number of read operations=0
+  		FILE: Number of large read operations=0
+  		FILE: Number of write operations=0
+  		HDFS: Number of bytes read=31692575
+  		HDFS: Number of bytes written=3852
+  		HDFS: Number of read operations=29
+  		HDFS: Number of large read operations=0
+  		HDFS: Number of write operations=2
+  		HDFS: Number of bytes read erasure-coded=0
+  	Job Counters 
+  		Launched map tasks=8
+  		Launched reduce tasks=1
+  		Rack-local map tasks=8
+  		Total time spent by all maps in occupied slots (ms)=14223
+  		Total time spent by all reduces in occupied slots (ms)=5853
+  		Total time spent by all map tasks (ms)=14223
+  		Total time spent by all reduce tasks (ms)=5853
+  		Total vcore-milliseconds taken by all map tasks=14223
+  		Total vcore-milliseconds taken by all reduce tasks=5853
+  		Total megabyte-milliseconds taken by all map tasks=14564352
+  		Total megabyte-milliseconds taken by all reduce tasks=5993472
+  	Map-Reduce Framework
+  		Map input records=631731
+  		Map output records=631731
+  		Map output bytes=31662583
+  		Map output materialized bytes=32926093
+  		Input split bytes=1320
+  		Combine input records=0
+  		Combine output records=0
+  		Reduce input groups=2
+  		Reduce shuffle bytes=32926093
+  		Reduce input records=631731
+  		Reduce output records=2
+  		Spilled Records=1263462
+  		Shuffled Maps =8
+  		Failed Shuffles=0
+  		Merged Map outputs=8
+  		GC time elapsed (ms)=96
+  		CPU time spent (ms)=10860
+  		Physical memory (bytes) snapshot=2939490304
+  		Virtual memory (bytes) snapshot=25135583232
+  		Total committed heap usage (bytes)=2359296000
+  		Peak Map Physical memory (bytes)=337969152
+  		Peak Map Virtual memory (bytes)=2802188288
+  		Peak Reduce Physical memory (bytes)=277897216
+  		Peak Reduce Virtual memory (bytes)=2801508352
+  	Shuffle Errors
+  		BAD_ID=0
+  		CONNECTION=0
+  		IO_ERROR=0
+  		WRONG_LENGTH=0
+  		WRONG_MAP=0
+  		WRONG_REDUCE=0
+  	File Input Format Counters 
+  		Bytes Read=31691255
+  	File Output Format Counters 
+  		Bytes Written=3852
+  2026-11-20 02:44:38,562 [main] INFO  org.apache.hadoop.streaming.StreamJob  - Output directory: hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/output
+Attempting to fetch counters from logs...
+Can't fetch history log; missing job ID
+No counters found
+job output is in hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/output
+Streaming final output from hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448/output...
+Removing HDFS temp directory hdfs:///user/root/tmp/mrjob/m1_bus_corridors.root.20261120.024239.154448...
+Removing temp directory /tmp/m1_bus_corridors.root.20261120.024239.154448...
