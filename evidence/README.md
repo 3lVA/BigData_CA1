@@ -7,7 +7,7 @@ Markdown links. File contents were checked with SHA-256 hashes after moving.
 | Folder | Contents |
 |---|---|
 | [fault-tolerance-demo/](fault-tolerance-demo/) | HDFS health check and replication reports before failure, during recovery, after re-replication and after restart |
-| [data-preparation/](data-preparation/) | HDFS upload-verification listings, rainfall profile and provenance checksum report |
+| [data-preparation/](data-preparation/) | HDFS upload-verification listings and rainfall preparation profile |
 | [m1/](m1/) | Bus corridor sample/full results, execution logs and YARN screenshot |
 | [m2/](m2/) | Rainfall sample/full results, execution logs and YARN screenshot |
 | [m3/](m3/) | Parking-pressure sample/full results, execution logs and YARN screenshot |
@@ -39,12 +39,3 @@ During final review, I organised the accumulated logs, results and screenshots
 by task. This made it easier to locate supporting evidence and check links.
 The reorganisation also showed why consistent filenames and folders are useful
 from the start of a project.
-
-## Provenance Records
-
-The [provenance write-up](../data_provenance.md) records sources, periods, row
-counts, field mappings and limitations. The
-[local file manifest](../userfiles/metadata/manifest.json) records file hashes
-and intended HDFS locations. The HDFS byte-comparison report is saved in
-data-preparation/provenance-hdfs-verification.txt. These local hashes are not
-claimed as verified against a lecturer-issued manifest.
