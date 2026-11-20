@@ -1,5 +1,9 @@
 # MapReduce Analytics
 
+This file records the completed M1-M4 analyses. Commands use the final evidence
+folder layout; the [evidence guide](../../evidence/README.md) explains paths
+shown in earlier screenshots and logs.
+
 ## M1 Busiest Directed Bus Corridors
 
 ### Method
@@ -33,6 +37,21 @@ The ten-record canonical sample matched the expected rankings
 and preserved stop-ID leading zeroes. The full dataset was then
 processed on YARN, with both stages reporting SUCCEEDED.
 
+The original full run used applications application_1795002805512_0002
+and application_1795002805512_0003. Both completed successfully.
+The [sample output](../../evidence/m1/m1-sample-output.txt),
+[sample log](../../evidence/m1/m1-sample-log.txt),
+[full results](../../evidence/m1/m1-output.txt),
+[YARN log](../../evidence/m1/m1-yarn-log.txt) and
+[application screenshot](../../evidence/m1/m1-yarn-applications.png)
+provide the execution and result evidence.
+
+Full YARN command, using the final evidence folder layout:
+
+```cmd
+docker compose exec -T client python3 mapreduce/m1_bus_corridors.py -r hadoop --stops canonical_data/bus_stops.csv hdfs:///sg_mobility/canonical/bus_od.csv > evidence\m1\m1-output.txt 2> evidence\m1\m1-yarn-log.txt
+```
+
 ### Findings
 For September 2026, the highest-volume directed pair in both
 day-type groups was 46101 (W'lands Checkpt) to 46211
@@ -55,8 +74,9 @@ Preparation retained 7,995 OD rows containing stop IDs absent
 from the metadata. The final output discloses three unmatched
 IDs in the weekday group and five in the weekend/holiday group.
 
-Only September 2026 was analysed. Complete repeated-run timing
-will be documented in the performance analysis.
+Only September 2026 was analysed. Three fresh benchmark runs are complete;
+the measurements and interpretation are recorded in
+[performance_analysis.md](../../performance_analysis.md).
 
 
 ## M2 Rainfall by Station and Day
@@ -111,13 +131,21 @@ stages completed successfully:
 | Daily aggregation | application_1795002805512_0004 | SUCCEEDED |
 | Ranking and partial results | application_1795002805512_0005 | SUCCEEDED |
 
-The first complete run took 55.78 seconds, including job submission and
-output retrieval, with exit code 0. Further repeated runs are required
-for the performance analysis.
+The original complete run took 55.78 seconds, including job submission and
+output retrieval, with exit code 0. Three fresh benchmark runs were subsequently
+completed and are reported separately in
+[performance_analysis.md](../../performance_analysis.md). The original timing
+is not included in that three-run benchmark summary.
 
-The [results](../../evidence/m2-output.txt),
-[execution logs](../../evidence/m2-yarn-log.txt) and
-[timing](../../evidence/m2-run1-timing.txt) are saved under evidence/.
+The [results](../../evidence/m2/m2-output.txt),
+[execution logs](../../evidence/m2/m2-yarn-log.txt) and
+[timing](../../evidence/m2/m2-run1-timing.txt) are saved under evidence/.
+
+Full YARN command, using the final evidence folder layout:
+
+```cmd
+docker compose exec -T client python3 mapreduce/m2_rainfall_station_day.py -r hadoop hdfs:///sg_mobility/canonical/rainfall.csv > evidence\m2\m2-output.txt 2> evidence\m2\m2-yarn-log.txt
+```
 
 ### Findings
 The highest observed rainfall among eligible station-days was 130.6 mm
@@ -199,12 +227,18 @@ The full canonical dataset was processed using the Hadoop runner:
 |---|---|---|
 | Daily parking aggregation | application_1795002805512_0006 | SUCCEEDED |
 
-The [sample results](../../evidence/m3-sample-output.txt),
-[sample log](../../evidence/m3-sample-log.txt),
-[full results](../../evidence/m3-output.txt),
-[execution log](../../evidence/m3-yarn-log.txt) and
-[YARN application screenshot](../../evidence/m3-yarn-applications.png)
+The [sample results](../../evidence/m3/m3-sample-output.txt),
+[sample log](../../evidence/m3/m3-sample-log.txt),
+[full results](../../evidence/m3/m3-output.txt),
+[execution log](../../evidence/m3/m3-yarn-log.txt) and
+[YARN application screenshot](../../evidence/m3/m3-yarn-applications.png)
 are saved under evidence/.
+
+Full YARN command, using the final evidence folder layout:
+
+```cmd
+docker compose exec -T client python3 mapreduce/m3_parking_pressure.py -r hadoop hdfs:///sg_mobility/canonical/carpark.csv > evidence\m3\m3-output.txt 2> evidence\m3\m3-yarn-log.txt
+```
 
 ### Findings
 For carpark A10 on 3 September 2026, the full output recorded:
@@ -353,13 +387,13 @@ docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py --create-
 Inline validation (Windows Command Prompt):
 
 ```cmd
-docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r inline mapreduce/m4_sample_rainfall.csv mapreduce/m4_sample_carpark.csv > evidence\m4-sample-output.txt 2> evidence\m4-sample-log.txt
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r inline mapreduce/m4_sample_rainfall.csv mapreduce/m4_sample_carpark.csv > evidence\m4\m4-sample-output.txt 2> evidence\m4\m4-sample-log.txt
 ```
 
 Full YARN execution (Windows Command Prompt):
 
 ```cmd
-docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r hadoop hdfs:///sg_mobility/canonical/rainfall.csv hdfs:///sg_mobility/canonical/carpark.csv > evidence\m4-output.txt 2> evidence\m4-yarn-log.txt
+docker compose exec -T client python3 mapreduce/m4_rainfall_parking.py -r hadoop hdfs:///sg_mobility/canonical/rainfall.csv hdfs:///sg_mobility/canonical/carpark.csv > evidence\m4\m4-output.txt 2> evidence\m4\m4-yarn-log.txt
 ```
 
 Independent reference calculations using exact rational arithmetic for canonical
@@ -368,11 +402,11 @@ all qualifying carpark IDs, supporting counts, six-decimal means and differences
 The top-ten order also matched when ranked by unrounded absolute differences.
 Signed zero in the saved decimal output is numerically equivalent to zero.
 
-The [sample output](../../evidence/m4-sample-output.txt),
-[sample log](../../evidence/m4-sample-log.txt),
-[full results](../../evidence/m4-output.txt),
-[YARN execution log](../../evidence/m4-yarn-log.txt) and
-[application screenshot](../../evidence/m4--yarn-applications.png)
+The [sample output](../../evidence/m4/m4-sample-output.txt),
+[sample log](../../evidence/m4/m4-sample-log.txt),
+[full results](../../evidence/m4/m4-output.txt),
+[YARN execution log](../../evidence/m4/m4-yarn-log.txt) and
+[application screenshot](../../evidence/m4/m4--yarn-applications.png)
 are saved under evidence/.
 
 ### Findings
